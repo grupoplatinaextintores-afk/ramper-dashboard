@@ -320,6 +320,8 @@ async function fetchRows() {
   const rows = json.table.rows.slice(1);
   return rows.map(r => {
     const g = i => r.c[i]?.v ?? '';
+    // Para datas, usa 'f' (formatted string) quando disponível
+    const gDate = i => r.c[i]?.f || r.c[i]?.v || '';
     return {
       lead_id:    g(COL.LEAD_ID),
       vendedor:   g(COL.VENDEDOR),
@@ -328,8 +330,8 @@ async function fetchRows() {
       status_int: g(COL.STATUS_INT),
       etapa:      g(COL.ETAPA),
       ultima_acao:g(COL.ULTIMA_ACAO),
-      data_str:   g(COL.DATA_PRIMEIRO),
-      data:       parseDate(g(COL.DATA_PRIMEIRO)),
+      data_str:   gDate(COL.DATA_PRIMEIRO),
+      data:       parseDate(gDate(COL.DATA_PRIMEIRO)),
       status:     g(COL.STATUS),
       proxima:    g(COL.PROXIMA),
       status_exec:g(COL.STATUS_EXEC),
@@ -338,20 +340,6 @@ async function fetchRows() {
   }).filter(r => r.vendedor); // ignora linhas vazias
 }
 
-// DIAGNÓSTICO — remove depois
-async function diagDatas() {
-  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
-  const res = await fetch(url);
-  const text = await res.text();
-  const json = JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1]);
-  const rows = json.table.rows.slice(1, 6); // primeiras 5 linhas
-  console.log('=== DIAGNÓSTICO DATAS ===');
-  rows.forEach((r, i) => {
-    const raw = r.c[9]; // coluna J
-    console.log(`Linha ${i+2}: raw=`, JSON.stringify(raw), '| parseDate=', parseDate(raw?.v ?? ''));
-  });
-}
-diagDatas();
 
 // ─── MÉTRICAS ─────────────────────────────────────────────
 function calcMetrics(rows, range) {
