@@ -347,6 +347,12 @@ function calcMetrics(rows, range) {
 
   // Filtra por período baseado em data_primeiro_contato
   // Leads sem data são tratados como pertencentes ao período mais recente
+  // DEBUG
+  const comData = rows.filter(r => r.data).length;
+  const semData = rows.filter(r => !r.data).length;
+  console.log(`Leads com data: ${comData}, sem data: ${semData}, total: ${rows.length}`);
+  if(rows.length > 0) console.log('Exemplo data_str:', rows[0].data_str, '| data:', rows[0].data);
+  // END DEBUG
   const isAll = range[0].getFullYear() === 2020;
   const inPeriod = rows.filter(r => {
     if(isAll) return true;
@@ -399,7 +405,7 @@ function calcMetrics(rows, range) {
 }
 
 // ─── UTILITÁRIOS ──────────────────────────────────────────
-function pct(a, b) { return b ? (a/b*100).toFixed(1)+'%' : '—'; }
+function pct(a, b) { if(!b || isNaN(a) || isNaN(b)) return '—'; return (a/b*100).toFixed(1)+'%'; }
 
 function deltaHtml(curr, prev) {
   if(prev === null || prev === undefined) return '';
