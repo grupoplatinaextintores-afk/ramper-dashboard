@@ -8,186 +8,99 @@
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --red: #C0392B;
-  --red-light: #FAECE7;
+  --red: #C0392B; --red-light: #FAECE7;
   --dark: #1A1A2E;
-  --green: #1D9E75;
-  --green-bg: #E1F5EE;
-  --amber: #BA7517;
-  --amber-bg: #FAEEDA;
-  --blue: #185FA5;
-  --blue-bg: #E6F1FB;
-  --gray: #5F5E5A;
-  --gray-bg: #F1EFE8;
-  --border: #E0DED7;
-  --bg: #F7F6F2;
-  --surface: #FFFFFF;
-  --text: #1A1A2E;
-  --text-2: #5F5E5A;
-  --text-3: #9C9A92;
-  --danger: #E24B4A;
-  --danger-bg: #FCEBEB;
-  --radius: 10px;
-  --radius-sm: 6px;
+  --green: #1D9E75; --green-bg: #E1F5EE;
+  --amber: #BA7517; --amber-bg: #FAEEDA;
+  --blue: #185FA5; --blue-bg: #E6F1FB;
+  --gray: #5F5E5A; --gray-bg: #F1EFE8;
+  --border: #E0DED7; --bg: #F7F6F2; --surface: #FFFFFF;
+  --text: #1A1A2E; --text-2: #5F5E5A; --text-3: #9C9A92;
+  --danger: #E24B4A; --danger-bg: #FCEBEB;
+  --radius: 10px; --radius-sm: 6px;
 }
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  font-size: 14px;
-  line-height: 1.5;
-  min-height: 100vh;
-}
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.5; min-height: 100vh; }
 
 /* HEADER */
-.header {
-  background: var(--dark);
-  padding: 0 2rem;
-  height: 56px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
+.header { background: var(--dark); padding: 0 2rem; height: 56px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
 .header-brand { display: flex; align-items: center; gap: 10px; }
-.brand-icon {
-  width: 28px; height: 28px;
-  background: var(--red);
-  border-radius: 6px;
-  display: flex; align-items: center; justify-content: center;
-}
+.brand-icon { width: 28px; height: 28px; background: var(--red); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
 .brand-icon svg { width: 16px; height: 16px; fill: white; }
 .brand-name { font-size: 14px; font-weight: 600; color: white; letter-spacing: .02em; }
 .brand-sub { font-size: 11px; color: rgba(255,255,255,.45); margin-left: 2px; }
 .header-right { display: flex; align-items: center; gap: 12px; }
 .last-update { font-size: 11px; color: rgba(255,255,255,.4); }
-.btn-refresh {
-  background: rgba(255,255,255,.1);
-  border: 1px solid rgba(255,255,255,.15);
-  color: white;
-  border-radius: var(--radius-sm);
-  padding: 5px 12px;
-  font-size: 12px;
-  cursor: pointer;
-  display: flex; align-items: center; gap: 6px;
-  transition: background .15s;
-}
+.btn-refresh { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15); color: white; border-radius: var(--radius-sm); padding: 5px 12px; font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: background .15s; }
 .btn-refresh:hover { background: rgba(255,255,255,.18); }
 .btn-refresh svg { width: 13px; height: 13px; fill: none; stroke: white; stroke-width: 2; }
 
 /* LAYOUT */
-.main { max-width: 1100px; margin: 0 auto; padding: 1.5rem 1.5rem 3rem; }
+.main { max-width: 1140px; margin: 0 auto; padding: 1.5rem 1.5rem 3rem; }
 
 /* FILTROS */
-.filters {
-  display: flex; align-items: center; gap: 10px;
-  margin-bottom: 1.25rem; flex-wrap: wrap;
-}
-.filter-label { font-size: 12px; color: var(--text-2); }
-.filter-select {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 6px 10px; font-size: 12px; color: var(--text); cursor: pointer;
-}
+.filters-bar { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: .875rem 1rem; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.filter-group { display: flex; align-items: center; gap: 6px; }
+.filter-label { font-size: 11px; color: var(--text-3); font-weight: 500; text-transform: uppercase; letter-spacing: .05em; white-space: nowrap; }
+.filter-select { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 5px 9px; font-size: 12px; color: var(--text); cursor: pointer; }
 .filter-select:focus { outline: none; border-color: var(--red); }
-.badge-live {
-  display: flex; align-items: center; gap: 5px;
-  background: var(--green-bg); color: var(--green);
-  border-radius: 20px; padding: 4px 10px;
-  font-size: 11px; font-weight: 500; margin-left: auto;
-}
-.dot-live {
-  width: 7px; height: 7px;
-  background: var(--green); border-radius: 50%;
-  animation: pulse 2s ease-in-out infinite;
-}
+.filter-divider { width: 1px; height: 24px; background: var(--border); margin: 0 4px; }
+.badge-live { display: flex; align-items: center; gap: 5px; background: var(--green-bg); color: var(--green); border-radius: 20px; padding: 4px 10px; font-size: 11px; font-weight: 500; margin-left: auto; }
+.dot-live { width: 7px; height: 7px; background: var(--green); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
 
-/* MÉTRICAS */
-.metrics-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 10px; margin-bottom: 1.5rem;
-}
-.metric {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: .875rem 1rem;
-}
+/* PERÍODO LABEL */
+.period-label { font-size: 12px; color: var(--text-2); margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
+.period-badge { background: var(--blue-bg); color: var(--blue); border-radius: 20px; padding: 2px 10px; font-size: 11px; font-weight: 600; }
+.compare-badge { background: var(--gray-bg); color: var(--gray); border-radius: 20px; padding: 2px 10px; font-size: 11px; }
+
+/* CARDS DE MÉTRICA COMPARATIVA */
+.metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; margin-bottom: 1.5rem; }
+.metric { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: .875rem 1rem; }
 .metric.highlight { border-left: 3px solid var(--green); }
 .metric.highlight-warn { border-left: 3px solid var(--danger); }
+.metric.highlight-blue { border-left: 3px solid var(--blue); }
 .metric-label { font-size: 11px; color: var(--text-3); font-weight: 500; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; }
 .metric-value { font-size: 28px; font-weight: 600; color: var(--text); line-height: 1; margin-bottom: 4px; }
 .metric-value.green { color: var(--green); }
 .metric-value.red { color: var(--danger); }
-.metric-sub { font-size: 11px; color: var(--text-3); }
+.metric-value.blue { color: var(--blue); }
+.metric-compare { display: flex; align-items: center; gap: 6px; margin-top: 4px; }
+.metric-prev { font-size: 11px; color: var(--text-3); }
+.delta { font-size: 11px; font-weight: 600; padding: 1px 6px; border-radius: 20px; }
+.delta-up { background: var(--green-bg); color: var(--green); }
+.delta-down { background: var(--danger-bg); color: var(--danger); }
+.delta-zero { background: var(--gray-bg); color: var(--gray); }
 
 /* SEÇÕES */
-.section-title {
-  font-size: 11px; font-weight: 600; color: var(--text-3);
-  text-transform: uppercase; letter-spacing: .07em;
-  margin-bottom: .75rem; margin-top: 1.75rem;
-  display: flex; align-items: center; gap: 8px;
-}
+.section-title { font-size: 11px; font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: .07em; margin-bottom: .75rem; margin-top: 1.75rem; display: flex; align-items: center; gap: 8px; }
 .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
 /* FUNIL */
-.funnel-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1.25rem 1.5rem;
-  margin-bottom: 1rem;
-}
+.funnel-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: 1rem; }
 .funnel-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
 .funnel-row:last-child { margin-bottom: 0; }
-.funnel-name { font-size: 12px; color: var(--text-2); min-width: 150px; }
+.funnel-name { font-size: 12px; color: var(--text-2); min-width: 160px; }
 .funnel-track { flex: 1; background: var(--bg); border-radius: 4px; height: 28px; overflow: hidden; }
-.funnel-fill {
-  height: 100%; border-radius: 4px;
-  display: flex; align-items: center; padding-left: 10px;
-  font-size: 11px; font-weight: 600; color: white;
-  transition: width .7s cubic-bezier(.4,0,.2,1);
-  min-width: 36px;
-}
+.funnel-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 10px; font-size: 11px; font-weight: 600; color: white; transition: width .7s cubic-bezier(.4,0,.2,1); min-width: 36px; }
 .funnel-n { font-size: 13px; font-weight: 600; color: var(--text); min-width: 40px; text-align: right; }
 
-/* GRID 2 COLS */
+/* GRID */
 .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-@media(max-width:640px){ .grid2{ grid-template-columns:1fr; } .metrics-grid{ grid-template-columns:1fr 1fr; } }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+@media(max-width:700px) { .grid2, .grid3 { grid-template-columns: 1fr; } .metrics-grid { grid-template-columns: 1fr 1fr; } }
 
 /* CARDS */
-.card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1.25rem;
-}
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; }
 .chart-wrap { position: relative; width: 100%; }
 
 /* VENDEDOR */
-.seller-header {
-  display: flex; align-items: center; gap: 10px;
-  margin-bottom: 1rem; padding-bottom: .75rem;
-  border-bottom: 1px solid var(--border);
-}
-.avatar {
-  width: 38px; height: 38px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 13px; font-weight: 600;
-}
+.seller-header { display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; padding-bottom: .75rem; border-bottom: 1px solid var(--border); }
+.avatar { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; }
 .av-blue { background: var(--blue-bg); color: var(--blue); }
 .av-amber { background: var(--amber-bg); color: var(--amber); }
 .seller-name { font-size: 14px; font-weight: 600; color: var(--text); }
 .seller-region { font-size: 11px; color: var(--text-3); }
-.kpi-row {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 13px;
-}
+.kpi-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
 .kpi-row:last-child { border-bottom: none; }
 .kpi-key { color: var(--text-2); }
 .kpi-val { font-weight: 500; color: var(--text); display: flex; align-items: center; gap: 6px; }
@@ -198,47 +111,30 @@ body {
 .p-red { background: var(--danger-bg); color: var(--danger); }
 .p-blue { background: var(--blue-bg); color: var(--blue); }
 
-/* LOADING */
+/* TEMPO CONVERSÃO */
+.conv-stat { text-align: center; padding: 1rem; }
+.conv-value { font-size: 36px; font-weight: 700; color: var(--blue); line-height: 1; }
+.conv-unit { font-size: 12px; color: var(--text-3); margin-top: 4px; }
+.conv-label { font-size: 11px; color: var(--text-2); margin-top: 8px; }
+
+/* ESTADO */
 .state-msg { text-align: center; padding: 3rem; color: var(--text-3); font-size: 13px; }
-.spinner {
-  width: 24px; height: 24px;
-  border: 2px solid var(--border); border-top-color: var(--red);
-  border-radius: 50%; animation: spin .7s linear infinite;
-  margin: 0 auto 12px;
-}
+.spinner { width: 24px; height: 24px; border: 2px solid var(--border); border-top-color: var(--red); border-radius: 50%; animation: spin .7s linear infinite; margin: 0 auto 12px; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* FOOTER */
-.footer {
-  margin-top: 2rem; padding: 1rem 0;
-  border-top: 1px solid var(--border);
-  font-size: 11px; color: var(--text-3);
-  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;
-}
-code {
-  background: var(--bg); border: 1px solid var(--border);
-  border-radius: 4px; padding: 1px 5px;
-  font-size: 11px; font-family: monospace;
-}
-
-/* ETAPAS FUP */
-.fup-badge {
-  display: inline-flex; align-items: center; gap: 4px;
-  background: var(--blue-bg); color: var(--blue);
-  border-radius: 20px; padding: 2px 8px; font-size: 11px; font-weight: 500;
-}
+.footer { margin-top: 2rem; padding: 1rem 0; border-top: 1px solid var(--border); font-size: 11px; color: var(--text-3); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+code { background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px; font-size: 11px; font-family: monospace; }
 </style>
 </head>
 <body>
 
 <header class="header">
   <div class="header-brand">
-    <div class="brand-icon">
-      <svg viewBox="0 0 24 24"><path d="M12 2L4 7v10l8 5 8-5V7L12 2z"/></svg>
-    </div>
+    <div class="brand-icon"><svg viewBox="0 0 24 24"><path d="M12 2L4 7v10l8 5 8-5V7L12 2z"/></svg></div>
     <div>
       <span class="brand-name">Platina Extintores</span>
-      <span class="brand-sub">Ramper · Prospecção Outbound</span>
+      <span class="brand-sub">Ramper · Análise Comparativa</span>
     </div>
   </div>
   <div class="header-right">
@@ -251,344 +147,487 @@ code {
 </header>
 
 <main class="main">
-  <div class="filters">
-    <span class="filter-label">Vendedor:</span>
-    <select class="filter-select" id="filter-seller" onchange="loadData()">
-      <option value="all">Todos</option>
-      <option value="Ronaldo">Ronaldo</option>
-      <option value="David">David</option>
-    </select>
-    <span class="filter-label">Status:</span>
-    <select class="filter-select" id="filter-status" onchange="loadData()">
-      <option value="all">Todos</option>
-      <option value="ativo">Ativos</option>
-      <option value="pausado">Pausados</option>
-      <option value="finalizado">Finalizados</option>
-    </select>
+
+  <!-- FILTROS -->
+  <div class="filters-bar">
+    <div class="filter-group">
+      <span class="filter-label">Período</span>
+      <select class="filter-select" id="filter-period" onchange="loadData()">
+        <option value="today">Hoje</option>
+        <option value="week">Esta semana</option>
+        <option value="month" selected>Este mês</option>
+        <option value="quarter">Este trimestre</option>
+        <option value="year">Este ano</option>
+        <option value="yesterday">Ontem</option>
+        <option value="last_week">Semana anterior</option>
+        <option value="last_month">Mês anterior</option>
+        <option value="last_quarter">Trimestre anterior</option>
+        <option value="last_year">Ano anterior</option>
+        <option value="all">Todo período</option>
+      </select>
+    </div>
+    <div class="filter-divider"></div>
+    <div class="filter-group">
+      <span class="filter-label">Comparado a</span>
+      <select class="filter-select" id="filter-compare" onchange="loadData()">
+        <option value="prev_month">Mês anterior</option>
+        <option value="prev_quarter">Mesmo período do trimestre anterior</option>
+        <option value="prev_year">Mesmo mês do ano anterior</option>
+        <option value="none">Sem comparativo</option>
+      </select>
+    </div>
+    <div class="filter-divider"></div>
+    <div class="filter-group">
+      <span class="filter-label">Vendedor</span>
+      <select class="filter-select" id="filter-seller" onchange="loadData()">
+        <option value="all">Todos</option>
+        <option value="Ronaldo">Ronaldo (1943)</option>
+        <option value="David">David (8206)</option>
+      </select>
+    </div>
     <span class="badge-live"><span class="dot-live"></span>Tempo real</span>
   </div>
 
   <div id="app-content">
     <div class="state-msg"><div class="spinner"></div>Carregando dados...</div>
   </div>
+
 </main>
 
 <script>
-/* ══════════════════════════════════════════════
-   CONFIGURAÇÃO — substitua o valor abaixo pelo
-   ID da sua planilha Google Sheets (deve ser
-   pública ou com acesso "qualquer pessoa com o link")
-   
-   Como obter: Planilha → Compartilhar → "Qualquer pessoa com o link"
-   ID está na URL: /spreadsheets/d/ESTE_ID/edit
-══════════════════════════════════════════════ */
-const SHEET_ID = '1iM7RpYL5HvdUHngRGGMqBG6159L1duOeellWPpn-gh8';
+const SHEET_ID   = '1iM7RpYL5HvdUHngRGGMqBG6159L1duOeellWPpn-gh8';
 const SHEET_NAME = 'Pendentes_IA';
 
-/* Colunas da planilha (índice 0 = coluna A) */
+// Colunas (0=A, 1=B...)
 const COL = {
-  LEAD_ID: 0,       // A
-  VENDEDOR: 1,      // B
-  NOME: 2,          // C
-  EMPRESA: 3,       // D
-  EMAIL: 4,         // E
-  TELEFONE: 5,      // F
-  STATUS_INTERNO: 6,// G
-  ETAPA_FUNIL: 7,   // H
-  ULTIMA_ACAO: 8,   // I
-  DATA_ULTIMA: 9,   // J
-  DECISOR: 10,      // K
-  CONTEXTO: 11,     // L
-  STATUS: 12,       // M
-  PROXIMA_ACAO: 13, // N
-  DATA_PROXIMA: 14, // O
-  STATUS_EXEC: 15,  // P
-  TENTATIVAS: 16,   // Q
-  MSG_ID: 17,       // R
+  LEAD_ID:0, VENDEDOR:1, NOME:2, EMPRESA:3, EMAIL:4, TELEFONE:5,
+  STATUS_INT:6, ETAPA:7, ULTIMA_ACAO:8, DATA_PRIMEIRO:9,
+  DECISOR:10, CONTEXTO:11, STATUS:12, PROXIMA:13, DATA_PROXIMA:14,
+  STATUS_EXEC:15, TENTATIVAS:16, MSG_ID:17
 };
 
-/* MODO DEMO — ativo enquanto SHEET_ID não for configurado */
-const DEMO_MODE = false;
+let charts = {};
 
-function gerarDemoData() {
-  const vendedores = ['Ronaldo', 'David'];
-  const etapas = ['enviar_apresentacao','fup1','fup2','fup3','fup4','ia_responder','handoff','finalizar'];
-  const statuses = ['ativo','ativo','ativo','ativo','pausado','pausado','finalizado'];
-  const internos = ['novo','em_andamento','em_andamento','qualificado','encerrado_handoff','desqualificado'];
-  const rows = [];
-  for (let i = 0; i < 320; i++) {
-    const vend = vendedores[i % 2 === 0 ? 0 : 1];
-    const tentativas = Math.floor(Math.random() * 5);
-    const status = statuses[Math.floor(Math.random() * statuses.length)];
-    const interno = internos[Math.floor(Math.random() * internos.length)];
-    const proxima = etapas[Math.floor(Math.random() * etapas.length)];
-    const statusExec = status === 'finalizado' ? 'finalizado' : status === 'pausado' ? 'pausado' : 'pendente';
-    rows.push({
-      vendedor: vend,
-      status,
-      status_interno: interno,
-      proxima_acao: proxima,
-      status_exec: statusExec,
-      tentativas,
-    });
+// ─── DATAS ────────────────────────────────────────────────
+function startOfDay(d){ const r=new Date(d); r.setHours(0,0,0,0); return r; }
+function endOfDay(d){ const r=new Date(d); r.setHours(23,59,59,999); return r; }
+
+function getPeriodRange(period, refDate=new Date()) {
+  const now = refDate;
+  const y = now.getFullYear(), m = now.getMonth(), d = now.getDate();
+  const dow = now.getDay(); // 0=dom
+
+  switch(period) {
+    case 'today':
+      return [startOfDay(now), endOfDay(now)];
+    case 'yesterday': {
+      const y1 = new Date(now); y1.setDate(d-1);
+      return [startOfDay(y1), endOfDay(y1)];
+    }
+    case 'week': {
+      const diff = dow === 0 ? 6 : dow - 1; // segunda=0
+      const mon = new Date(now); mon.setDate(d - diff);
+      return [startOfDay(mon), endOfDay(now)];
+    }
+    case 'last_week': {
+      const diff = dow === 0 ? 6 : dow - 1;
+      const mon = new Date(now); mon.setDate(d - diff - 7);
+      const sun = new Date(mon); sun.setDate(mon.getDate() + 6);
+      return [startOfDay(mon), endOfDay(sun)];
+    }
+    case 'month':
+      return [new Date(y, m, 1), endOfDay(now)];
+    case 'last_month':
+      return [new Date(y, m-1, 1), new Date(y, m, 0, 23, 59, 59)];
+    case 'quarter': {
+      const qStart = Math.floor(m/3)*3;
+      return [new Date(y, qStart, 1), endOfDay(now)];
+    }
+    case 'last_quarter': {
+      const qStart = Math.floor(m/3)*3;
+      const pqStart = qStart - 3;
+      if(pqStart < 0) return [new Date(y-1, 9, 1), new Date(y-1, 12, 0, 23,59,59)];
+      return [new Date(y, pqStart, 1), new Date(y, qStart, 0, 23,59,59)];
+    }
+    case 'year':
+      return [new Date(y, 0, 1), endOfDay(now)];
+    case 'last_year':
+      return [new Date(y-1, 0, 1), new Date(y-1, 11, 31, 23,59,59)];
+    case 'all':
+    default:
+      return [new Date(2020, 0, 1), endOfDay(now)];
   }
-  return rows;
 }
 
-let chartFunil = null;
-let chartVendedores = null;
-let chartEtapas = null;
+function getComparePeriod(period, compareTo) {
+  if(compareTo === 'none') return null;
+  const [start, end] = getPeriodRange(period);
+  const duration = end - start;
 
+  if(compareTo === 'prev_month') {
+    // Mesmo período no mês anterior
+    const s = new Date(start); s.setMonth(s.getMonth()-1);
+    const e = new Date(s.getTime() + duration);
+    return [s, e];
+  }
+  if(compareTo === 'prev_quarter') {
+    const s = new Date(start); s.setMonth(s.getMonth()-3);
+    const e = new Date(s.getTime() + duration);
+    return [s, e];
+  }
+  if(compareTo === 'prev_year') {
+    const s = new Date(start); s.setFullYear(s.getFullYear()-1);
+    const e = new Date(s.getTime() + duration);
+    return [s, e];
+  }
+  return null;
+}
+
+function fmtDate(d) {
+  return d.toLocaleDateString('pt-BR', {day:'2-digit', month:'short', year:'numeric'});
+}
+
+function parseDate(str) {
+  if(!str) return null;
+  // Suporta YYYY-MM-DD e DD/MM/YYYY
+  if(str.includes('-')) return new Date(str + 'T00:00:00');
+  const [dd,mm,yy] = str.split('/');
+  return new Date(`${yy}-${mm}-${dd}T00:00:00`);
+}
+
+// ─── FETCH SHEETS ─────────────────────────────────────────
 async function fetchRows() {
-  if (DEMO_MODE) return gerarDemoData();
-
   const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
   const res = await fetch(url);
   const text = await res.text();
   const json = JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1]);
-  const rows = json.table.rows.slice(1); // pula header
-  return rows.map(r => ({
-    vendedor:      r.c[COL.VENDEDOR]?.v || '',
-    status:        r.c[COL.STATUS]?.v || '',
-    status_interno:r.c[COL.STATUS_INTERNO]?.v || '',
-    proxima_acao:  r.c[COL.PROXIMA_ACAO]?.v || '',
-    status_exec:   r.c[COL.STATUS_EXEC]?.v || '',
-    tentativas:    parseInt(r.c[COL.TENTATIVAS]?.v || 0),
-  }));
+  const rows = json.table.rows.slice(1);
+  return rows.map(r => {
+    const g = i => r.c[i]?.v ?? '';
+    return {
+      lead_id:    g(COL.LEAD_ID),
+      vendedor:   g(COL.VENDEDOR),
+      nome:       g(COL.NOME),
+      empresa:    g(COL.EMPRESA),
+      status_int: g(COL.STATUS_INT),
+      etapa:      g(COL.ETAPA),
+      ultima_acao:g(COL.ULTIMA_ACAO),
+      data_str:   g(COL.DATA_PRIMEIRO),
+      data:       parseDate(g(COL.DATA_PRIMEIRO)),
+      status:     g(COL.STATUS),
+      proxima:    g(COL.PROXIMA),
+      status_exec:g(COL.STATUS_EXEC),
+      tentativas: parseInt(g(COL.TENTATIVAS)) || 0,
+    };
+  }).filter(r => r.vendedor); // ignora linhas vazias
 }
 
-function filtrar(rows) {
-  const seller = document.getElementById('filter-seller')?.value || 'all';
-  const status = document.getElementById('filter-status')?.value || 'all';
-  return rows.filter(r => {
-    if (seller !== 'all' && r.vendedor !== seller) return false;
-    if (status !== 'all' && r.status !== status) return false;
-    return true;
-  });
-}
+// ─── MÉTRICAS ─────────────────────────────────────────────
+function calcMetrics(rows, range) {
+  const [start, end] = range;
 
-function calcMetrics(rows) {
-  const total = rows.length;
+  // Filtra por período baseado em data_primeiro_contato
+  const inPeriod = rows.filter(r => r.data && r.data >= start && r.data <= end);
+  const allPeriod = range[0].getFullYear() === 2020 ? rows : inPeriod; // "all" = todos
 
-  // Funil de cadência
-  const enviados       = rows.filter(r => r.tentativas >= 0).length; // todos entraram
-  const receberam_fup  = rows.filter(r => r.tentativas >= 1).length;
-  const engajados      = rows.filter(r => ['ia_responder','handoff','encerrado_handoff','qualificado'].includes(r.status_interno)).length;
-  const handoffs       = rows.filter(r => r.status_interno === 'encerrado_handoff' || r.proxima_acao === 'handoff').length;
-  const desqualificados= rows.filter(r => r.status_interno === 'desqualificado').length;
-  const ativos         = rows.filter(r => r.status === 'ativo').length;
-  const pausados       = rows.filter(r => r.status === 'pausado').length;
-  const finalizados    = rows.filter(r => r.status_exec === 'finalizado').length;
+  const base = allPeriod;
 
-  // Por etapa de follow-up
-  const porTentativa = [0,1,2,3,4].map(n => ({
-    n,
-    total: rows.filter(r => r.tentativas === n).length,
-    engajados: rows.filter(r => r.tentativas === n && ['ia_responder','handoff','encerrado_handoff','qualificado'].includes(r.status_interno)).length,
-    handoff: rows.filter(r => r.tentativas === n && (r.status_interno === 'encerrado_handoff' || r.proxima_acao === 'handoff')).length,
-  }));
+  const total       = base.length;
+  const disparos    = base.reduce((acc, r) => acc + r.tentativas, 0);
+  const respondidos = base.filter(r => ['ia_conversando','handoff','encerrado_handoff','qualificado','desqualificado','interesse_futuro'].includes(r.status_int)).length;
+  const handoffs    = base.filter(r => ['qualificado','encerrado_handoff'].includes(r.status_int) || r.proxima === 'handoff').length;
+  const desqual     = base.filter(r => r.status_int === 'desqualificado').length;
+  const ativos      = base.filter(r => r.status === 'ativo').length;
+
+  // Tempo médio de conversão (dias entre primeiro contato e resposta, apenas respondidos)
+  const respondidosComData = base.filter(r =>
+    r.data && ['ia_conversando','handoff','encerrado_handoff','qualificado','desqualificado'].includes(r.status_int)
+  );
+  const tempoConversao = respondidosComData.length > 0
+    ? Math.round(respondidosComData.reduce((acc, r) => {
+        const dias = Math.max(0, (new Date() - r.data) / (1000*60*60*24));
+        return acc + dias;
+      }, 0) / respondidosComData.length)
+    : null;
 
   // Por vendedor
-  const porVendedor = ['Ronaldo', 'David'].map(nome => {
-    const sub = rows.filter(r => r.vendedor === nome);
+  const porVendedor = ['Ronaldo','David'].map(nome => {
+    const sub = base.filter(r => r.vendedor === nome);
     return {
       nome,
-      total: sub.length,
-      ativos: sub.filter(r => r.status === 'ativo').length,
-      engajados: sub.filter(r => ['ia_responder','handoff','encerrado_handoff','qualificado'].includes(r.status_interno)).length,
-      handoffs: sub.filter(r => r.status_interno === 'encerrado_handoff' || r.proxima_acao === 'handoff').length,
-      desqualificados: sub.filter(r => r.status_interno === 'desqualificado').length,
-      finalizados: sub.filter(r => r.status_exec === 'finalizado').length,
+      total:     sub.length,
+      disparos:  sub.reduce((a, r) => a + r.tentativas, 0),
+      respondidos: sub.filter(r => ['ia_conversando','handoff','encerrado_handoff','qualificado','desqualificado'].includes(r.status_int)).length,
+      handoffs:  sub.filter(r => ['qualificado','encerrado_handoff'].includes(r.status_int) || r.proxima === 'handoff').length,
+      desqual:   sub.filter(r => r.status_int === 'desqualificado').length,
+      ativos:    sub.filter(r => r.status === 'ativo').length,
     };
   });
 
-  return { total, enviados, receberam_fup, engajados, handoffs, desqualificados, ativos, pausados, finalizados, porTentativa, porVendedor };
+  // Por etapa de cadência (tentativas 1-4)
+  const porEtapa = [1,2,3,4].map(n => ({
+    n,
+    total:      base.filter(r => r.tentativas === n).length,
+    respondidos:base.filter(r => r.tentativas === n && ['ia_conversando','handoff','encerrado_handoff','qualificado','desqualificado'].includes(r.status_int)).length,
+    handoffs:   base.filter(r => r.tentativas === n && (['qualificado','encerrado_handoff'].includes(r.status_int) || r.proxima === 'handoff')).length,
+  }));
+
+  return { total, disparos, respondidos, handoffs, desqual, ativos, tempoConversao, porVendedor, porEtapa };
 }
 
+// ─── UTILITÁRIOS ──────────────────────────────────────────
 function pct(a, b) { return b ? (a/b*100).toFixed(1)+'%' : '—'; }
-function renderPill(text, cls) { return `<span class="pill ${cls}">${text}</span>`; }
 
-function buildCharts(m) {
-  const etapas = ['Apresentação','FUP 1','FUP 2','FUP 3','FUP 4'];
-
-  // Gráfico por etapa
-  if (chartEtapas) chartEtapas.destroy();
-  chartEtapas = new Chart(document.getElementById('chartEtapas'), {
-    type: 'bar',
-    data: {
-      labels: etapas,
-      datasets: [
-        { label: 'Total na etapa', data: m.porTentativa.map(f => f.total), backgroundColor: '#378ADD55', borderColor: '#378ADD', borderWidth: 1.5 },
-        { label: 'Engajados', data: m.porTentativa.map(f => f.engajados), backgroundColor: '#1D9E7555', borderColor: '#1D9E75', borderWidth: 1.5 },
-        { label: 'Handoffs', data: m.porTentativa.map(f => f.handoff), backgroundColor: '#BA751755', borderColor: '#BA7517', borderWidth: 1.5 },
-      ]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
-      scales: {
-        x: { ticks: { color: '#9C9A92', font: { size: 11 } }, grid: { color: 'rgba(0,0,0,.06)' } },
-        y: { ticks: { color: '#9C9A92', font: { size: 11 } }, grid: { color: 'rgba(0,0,0,.06)' }, beginAtZero: true }
-      }
-    }
-  });
-
-  // Gráfico comparativo vendedores
-  if (chartVendedores) chartVendedores.destroy();
-  chartVendedores = new Chart(document.getElementById('chartVendedores'), {
-    type: 'bar',
-    data: {
-      labels: ['Total leads','Ativos','Engajados','Handoffs'],
-      datasets: [
-        { label: 'Ronaldo', data: [m.porVendedor[0].total, m.porVendedor[0].ativos, m.porVendedor[0].engajados, m.porVendedor[0].handoffs], backgroundColor: '#185FA555', borderColor: '#185FA5', borderWidth: 1.5 },
-        { label: 'David',   data: [m.porVendedor[1].total, m.porVendedor[1].ativos, m.porVendedor[1].engajados, m.porVendedor[1].handoffs], backgroundColor: '#BA751755', borderColor: '#BA7517', borderWidth: 1.5 },
-      ]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
-      scales: {
-        x: { ticks: { color: '#9C9A92', font: { size: 11 } }, grid: { color: 'rgba(0,0,0,.06)' } },
-        y: { ticks: { color: '#9C9A92', font: { size: 11 } }, grid: { color: 'rgba(0,0,0,.06)' }, beginAtZero: true }
-      }
-    }
-  });
+function deltaHtml(curr, prev) {
+  if(prev === null || prev === undefined) return '';
+  if(prev === 0 && curr === 0) return '<span class="delta delta-zero">0%</span>';
+  if(prev === 0) return '<span class="delta delta-up">+∞</span>';
+  const d = ((curr - prev) / prev * 100).toFixed(0);
+  const cls = d > 0 ? 'delta-up' : d < 0 ? 'delta-down' : 'delta-zero';
+  const sign = d > 0 ? '+' : '';
+  return `<span class="delta ${cls}">${sign}${d}%</span>`;
 }
 
-function renderLegend(id, items) {
-  document.getElementById(id).innerHTML = items.map(([c, l]) =>
-    `<span style="display:flex;align-items:center;gap:5px">
-      <span style="width:10px;height:10px;border-radius:2px;background:${c}"></span>
-      <span style="font-size:12px;color:#5F5E5A">${l}</span>
-    </span>`
-  ).join('');
+function metricCard(label, value, prev, sub, cls='', highlight='') {
+  const borderCls = highlight ? `highlight${highlight === 'warn' ? '-warn' : highlight === 'blue' ? '-blue' : ''}` : '';
+  const prevHtml = prev !== null && prev !== undefined
+    ? `<div class="metric-compare"><span class="metric-prev">${prev} anterior</span>${deltaHtml(value, prev)}</div>`
+    : `<div class="metric-sub">${sub}</div>`;
+  return `<div class="metric ${borderCls}">
+    <div class="metric-label">${label}</div>
+    <div class="metric-value ${cls}">${value}</div>
+    ${prevHtml}
+  </div>`;
 }
 
-function renderApp(m) {
+function pill(t, c) { return `<span class="pill ${c}">${t}</span>`; }
+
+// ─── CHARTS ───────────────────────────────────────────────
+function buildChart(id, config) {
+  if(charts[id]) charts[id].destroy();
+  charts[id] = new Chart(document.getElementById(id), config);
+}
+
+function chartOpts(extra={}) {
+  return {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { color: '#9C9A92', font: { size: 11 } }, grid: { color: 'rgba(0,0,0,.05)' } },
+      y: { ticks: { color: '#9C9A92', font: { size: 11 } }, grid: { color: 'rgba(0,0,0,.05)' }, beginAtZero: true }
+    },
+    ...extra
+  };
+}
+
+// ─── RENDER ───────────────────────────────────────────────
+function renderApp(m, mPrev, periodLabel, compareLabel) {
+  const noCompare = mPrev === null;
+  const p = noCompare ? {} : mPrev;
+
   const sellerInfo = {
-    'Ronaldo': { av: 'RO', avcls: 'av-blue', desc: 'LEAD 1943' },
-    'David':   { av: 'DA', avcls: 'av-amber', desc: 'LEAD 8206' },
+    Ronaldo: { av:'RO', cls:'av-blue', desc:'LEAD 1943' },
+    David:   { av:'DA', cls:'av-amber', desc:'LEAD 8206' },
   };
 
-  const funnel = [
-    { label: 'Leads prospectados',  n: m.total,          base: m.total, color: '#378ADD' },
-    { label: 'Receberam follow-up', n: m.receberam_fup,  base: m.total, color: '#185FA5' },
-    { label: 'Engajados (IA)',      n: m.engajados,      base: m.total, color: '#1D9E75' },
-    { label: 'Handoffs realizados', n: m.handoffs,       base: m.total, color: '#BA7517' },
-    { label: 'Desqualificados',     n: m.desqualificados,base: m.total, color: '#E24B4A' },
+  const funil = [
+    { label:'Leads abordados',     n:m.total,      color:'#378ADD' },
+    { label:'E-mails disparados',  n:m.disparos,   color:'#185FA5' },
+    { label:'Respondidos',         n:m.respondidos,color:'#1D9E75' },
+    { label:'Handoffs realizados', n:m.handoffs,   color:'#BA7517' },
+    { label:'Desqualificados',     n:m.desqual,    color:'#E24B4A' },
   ];
 
   document.getElementById('app-content').innerHTML = `
 
-    <div class="metrics-grid">
-      <div class="metric">
-        <div class="metric-label">Total de leads</div>
-        <div class="metric-value">${m.total}</div>
-        <div class="metric-sub">na campanha</div>
-      </div>
-      <div class="metric">
-        <div class="metric-label">Ativos</div>
-        <div class="metric-value">${m.ativos}</div>
-        <div class="metric-sub">${pct(m.ativos, m.total)} do total</div>
-      </div>
-      <div class="metric">
-        <div class="metric-label">Engajados (IA)</div>
-        <div class="metric-value">${m.engajados}</div>
-        <div class="metric-sub">${pct(m.engajados, m.total)} do total</div>
-      </div>
-      <div class="metric highlight">
-        <div class="metric-label">Handoffs</div>
-        <div class="metric-value green">${m.handoffs}</div>
-        <div class="metric-sub">${pct(m.handoffs, m.engajados)} dos engajados</div>
-      </div>
-      <div class="metric">
-        <div class="metric-label">Finalizados</div>
-        <div class="metric-value">${m.finalizados}</div>
-        <div class="metric-sub">${pct(m.finalizados, m.total)} do total</div>
-      </div>
-      <div class="metric highlight-warn">
-        <div class="metric-label">Desqualificados</div>
-        <div class="metric-value red">${m.desqualificados}</div>
-        <div class="metric-sub">${pct(m.desqualificados, m.total)} do total</div>
-      </div>
+    <!-- PERÍODO -->
+    <div class="period-label">
+      <span class="period-badge">${periodLabel}</span>
+      ${!noCompare ? `<span>vs</span><span class="compare-badge">${compareLabel}</span>` : ''}
     </div>
 
+    <!-- MÉTRICAS PRINCIPAIS -->
+    <div class="metrics-grid">
+      ${metricCard('Leads abordados',    m.total,       noCompare?null:p.total,       `${pct(m.ativos,m.total)} ativos`, '', '')}
+      ${metricCard('E-mails disparados', m.disparos,    noCompare?null:p.disparos,    `média ${m.total?Math.round(m.disparos/m.total):0}/lead`, '', 'blue')}
+      ${metricCard('Respondidos',        m.respondidos, noCompare?null:p.respondidos, pct(m.respondidos,m.disparos)+' dos disparos', 'green', '')}
+      ${metricCard('Handoffs',           m.handoffs,    noCompare?null:p.handoffs,    pct(m.handoffs,m.respondidos)+' das respostas', 'green', '')}
+      ${metricCard('Taxa de resposta',   pct(m.respondidos,m.disparos), null, null, '', '')}
+      ${metricCard('Desqualificados',    m.desqual,     noCompare?null:p.desqual,     pct(m.desqual,m.respondidos)+' das respostas', 'red', 'warn')}
+    </div>
+
+    <!-- FUNIL -->
     <div class="section-title">Funil de prospecção</div>
     <div class="funnel-card">
-      ${funnel.map(f => {
-        const w = m.total ? Math.max(3, Math.round(f.n / f.base * 100)) : 3;
+      ${funil.map(f => {
+        const base = m.disparos || m.total || 1;
+        const w = Math.max(3, Math.round(f.n / base * 100));
         return `<div class="funnel-row">
           <span class="funnel-name">${f.label}</span>
-          <div class="funnel-track">
-            <div class="funnel-fill" style="width:${w}%;background:${f.color}">${pct(f.n, f.base)}</div>
-          </div>
+          <div class="funnel-track"><div class="funnel-fill" style="width:${w}%;background:${f.color}">${pct(f.n, base)}</div></div>
           <span class="funnel-n">${f.n}</span>
         </div>`;
       }).join('')}
     </div>
 
+    <!-- RESULTADO POR ETAPA -->
     <div class="section-title">Resultado por etapa de cadência</div>
     <div class="card" style="margin-bottom:1rem">
       <div class="chart-wrap" style="height:220px">
-        <canvas id="chartEtapas" role="img" aria-label="Resultado por etapa de cadência"></canvas>
+        <canvas id="chartEtapas"></canvas>
       </div>
     </div>
-    <div id="legend-etapas" style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:1.5rem"></div>
+    <div id="leg-etapas" style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:1.5rem"></div>
 
+    <!-- TEMPO DE CONVERSÃO + COMPARATIVO VENDEDORES -->
+    <div class="section-title">Performance</div>
+    <div class="grid3" style="margin-bottom:1rem">
+      <div class="card" style="display:flex;align-items:center;justify-content:center">
+        <div class="conv-stat">
+          <div class="conv-value">${m.tempoConversao !== null ? m.tempoConversao : '—'}</div>
+          <div class="conv-unit">dias</div>
+          <div class="conv-label">Tempo médio até resposta</div>
+        </div>
+      </div>
+      <div class="card" style="display:flex;align-items:center;justify-content:center">
+        <div class="conv-stat">
+          <div class="conv-value" style="color:var(--green)">${pct(m.handoffs, m.total)}</div>
+          <div class="conv-unit">&nbsp;</div>
+          <div class="conv-label">Taxa de conversão (handoff/lead)</div>
+        </div>
+      </div>
+      <div class="card" style="display:flex;align-items:center;justify-content:center">
+        <div class="conv-stat">
+          <div class="conv-value" style="color:var(--amber)">${m.total ? Math.round(m.disparos/m.total*10)/10 : '—'}</div>
+          <div class="conv-unit">e-mails/lead</div>
+          <div class="conv-label">Média de disparos por lead</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- POR VENDEDOR -->
     <div class="section-title">Desempenho por vendedor</div>
     <div class="grid2" style="margin-bottom:1rem">
-      ${['Ronaldo', 'David'].map((nome, i) => {
-        const sv = m.porVendedor[i];
-        const si = sellerInfo[nome];
+      ${m.porVendedor.map(sv => {
+        const si = sellerInfo[sv.nome];
+        const pv = noCompare ? null : p.porVendedor?.find(v => v.nome === sv.nome);
         return `<div class="card">
           <div class="seller-header">
-            <div class="avatar ${si.avcls}">${si.av}</div>
-            <div>
-              <div class="seller-name">${nome}</div>
-              <div class="seller-region">${si.desc}</div>
-            </div>
+            <div class="avatar ${si.cls}">${si.av}</div>
+            <div><div class="seller-name">${sv.nome}</div><div class="seller-region">${si.desc}</div></div>
           </div>
-          <div class="kpi-row"><span class="kpi-key">Total de leads</span><span class="kpi-val">${sv.total}</span></div>
-          <div class="kpi-row"><span class="kpi-key">Ativos</span><span class="kpi-val">${sv.ativos} ${renderPill(pct(sv.ativos, sv.total), 'p-blue')}</span></div>
-          <div class="kpi-row"><span class="kpi-key">Engajados (IA respondeu)</span><span class="kpi-val">${sv.engajados} ${renderPill(pct(sv.engajados, sv.total), 'p-gray')}</span></div>
-          <div class="kpi-row"><span class="kpi-key">Handoffs para vendedor</span><span class="kpi-val">${sv.handoffs} ${renderPill(pct(sv.handoffs, sv.engajados), 'p-green')}</span></div>
-          <div class="kpi-row"><span class="kpi-key">Taxa handoff/lead</span><span class="kpi-val" style="color:var(--green);font-weight:600">${pct(sv.handoffs, sv.total)}</span></div>
-          <div class="kpi-row"><span class="kpi-key">Desqualificados</span><span class="kpi-val">${sv.desqualificados} ${renderPill(pct(sv.desqualificados, sv.total), 'p-red')}</span></div>
+          <div class="kpi-row"><span class="kpi-key">Leads abordados</span><span class="kpi-val">${sv.total} ${pv?deltaHtml(sv.total,pv.total):''}</span></div>
+          <div class="kpi-row"><span class="kpi-key">E-mails disparados</span><span class="kpi-val">${sv.disparos} ${pv?deltaHtml(sv.disparos,pv.disparos):''}</span></div>
+          <div class="kpi-row"><span class="kpi-key">Respondidos</span><span class="kpi-val">${sv.respondidos} ${pill(pct(sv.respondidos,sv.disparos),'p-blue')}</span></div>
+          <div class="kpi-row"><span class="kpi-key">Handoffs</span><span class="kpi-val">${sv.handoffs} ${pill(pct(sv.handoffs,sv.respondidos),'p-green')} ${pv?deltaHtml(sv.handoffs,pv.handoffs):''}</span></div>
+          <div class="kpi-row"><span class="kpi-key">Taxa handoff/lead</span><span class="kpi-val" style="color:var(--green);font-weight:600">${pct(sv.handoffs,sv.total)}</span></div>
+          <div class="kpi-row"><span class="kpi-key">Desqualificados</span><span class="kpi-val">${sv.desqual} ${pill(pct(sv.desqual,sv.respondidos),'p-red')}</span></div>
         </div>`;
       }).join('')}
     </div>
 
+    <!-- CHART COMPARATIVO VENDEDORES -->
     <div class="card" style="margin-bottom:.5rem">
       <div class="chart-wrap" style="height:200px">
-        <canvas id="chartVendedores" role="img" aria-label="Comparativo entre vendedores"></canvas>
+        <canvas id="chartVendedores"></canvas>
       </div>
     </div>
-    <div id="legend-vendedores" style="display:flex;gap:16px;margin-bottom:2rem"></div>
+    <div id="leg-vendedores" style="display:flex;gap:16px;margin-bottom:2rem"></div>
 
     <div class="footer">
       <span>Dados lidos em tempo real via Google Sheets · aba <code>${SHEET_NAME}</code></span>
-      <span id="demo-note" style="color:var(--amber)">${DEMO_MODE ? '⚠ Modo demo — substitua SHEET_ID no arquivo index.html' : ''}</span>
+      <span style="color:var(--text-3)">Filtro de período baseado em <code>Data_primeiro_contato</code></span>
     </div>
   `;
 
-  buildCharts(m);
-  renderLegend('legend-etapas', [['#378ADD','Total na etapa'],['#1D9E75','Engajados'],['#BA7517','Handoffs']]);
-  renderLegend('legend-vendedores', [['#185FA5','Ronaldo'],['#BA7517','David']]);
+  // Charts
+  const etapas = ['Apresentação','FUP 1','FUP 2','FUP 3','FUP 4'];
+  buildChart('chartEtapas', {
+    type: 'bar',
+    data: {
+      labels: etapas,
+      datasets: [
+        { label:'Total', data:[m.total, ...m.porEtapa.map(e=>e.total)], backgroundColor:'#378ADD33', borderColor:'#378ADD', borderWidth:1.5 },
+        { label:'Respondidos', data:[0, ...m.porEtapa.map(e=>e.respondidos)], backgroundColor:'#1D9E7533', borderColor:'#1D9E75', borderWidth:1.5 },
+        { label:'Handoffs', data:[0, ...m.porEtapa.map(e=>e.handoffs)], backgroundColor:'#BA751733', borderColor:'#BA7517', borderWidth:1.5 },
+      ]
+    },
+    options: chartOpts()
+  });
+
+  buildChart('chartVendedores', {
+    type: 'bar',
+    data: {
+      labels: ['Total leads','Disparos','Respondidos','Handoffs'],
+      datasets: [
+        { label:'Ronaldo', data:[m.porVendedor[0].total, m.porVendedor[0].disparos, m.porVendedor[0].respondidos, m.porVendedor[0].handoffs], backgroundColor:'#185FA533', borderColor:'#185FA5', borderWidth:1.5 },
+        { label:'David',   data:[m.porVendedor[1].total, m.porVendedor[1].disparos, m.porVendedor[1].respondidos, m.porVendedor[1].handoffs], backgroundColor:'#BA751733', borderColor:'#BA7517', borderWidth:1.5 },
+      ]
+    },
+    options: chartOpts()
+  });
+
+  // Legends
+  const mkLeg = (id, items) => {
+    document.getElementById(id).innerHTML = items.map(([c,l]) =>
+      `<span style="display:flex;align-items:center;gap:5px">
+        <span style="width:10px;height:10px;border-radius:2px;background:${c}"></span>
+        <span style="font-size:12px;color:#5F5E5A">${l}</span>
+      </span>`
+    ).join('');
+  };
+  mkLeg('leg-etapas', [['#378ADD','Total'],['#1D9E75','Respondidos'],['#BA7517','Handoffs']]);
+  mkLeg('leg-vendedores', [['#185FA5','Ronaldo'],['#BA7517','David']]);
 }
 
+// ─── NOMES DE PERÍODO ──────────────────────────────────────
+const periodNames = {
+  today:'Hoje', week:'Esta semana', month:'Este mês', quarter:'Este trimestre',
+  year:'Este ano', yesterday:'Ontem', last_week:'Semana anterior',
+  last_month:'Mês anterior', last_quarter:'Trimestre anterior',
+  last_year:'Ano anterior', all:'Todo período'
+};
+const compareNames = {
+  prev_month:'Mês anterior', prev_quarter:'Mesmo período do trimestre anterior',
+  prev_year:'Mesmo mês do ano anterior', none:'Sem comparativo'
+};
+
+// ─── LOAD ──────────────────────────────────────────────────
 async function loadData() {
   try {
     document.getElementById('app-content').innerHTML =
       '<div class="state-msg"><div class="spinner"></div>Carregando dados...</div>';
-    const rows = await fetchRows();
-    const filtered = filtrar(rows);
-    renderApp(calcMetrics(filtered));
+
+    const period  = document.getElementById('filter-period').value;
+    const compare = document.getElementById('filter-compare').value;
+    const seller  = document.getElementById('filter-seller').value;
+
+    const allRows = await fetchRows();
+    const rows = seller === 'all' ? allRows : allRows.filter(r => r.vendedor === seller);
+
+    const range   = getPeriodRange(period);
+    const cmpRange = compare !== 'none' ? getComparePeriod(period, compare) : null;
+
+    const m    = calcMetrics(rows, range);
+    const mPrev = cmpRange ? calcMetrics(rows, cmpRange) : null;
+
+    const [s,e] = range;
+    const periodLabel = period === 'all'
+      ? 'Todo o período'
+      : `${fmtDate(s)} — ${fmtDate(e)}`;
+    const compareLabel = cmpRange
+      ? `${fmtDate(cmpRange[0])} — ${fmtDate(cmpRange[1])}`
+      : '';
+
+    renderApp(m, mPrev, periodLabel, compareLabel);
+
     document.getElementById('last-update').textContent =
-      'Atualizado ' + new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-  } catch (e) {
+      'Atualizado ' + new Date().toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'});
+
+  } catch(e) {
     document.getElementById('app-content').innerHTML =
-      `<div class="state-msg">Erro ao carregar dados: ${e.message}<br><br>
-      Verifique se o SHEET_ID está correto e se a planilha está pública.</div>`;
+      `<div class="state-msg">Erro ao carregar: ${e.message}</div>`;
+    console.error(e);
   }
 }
 
