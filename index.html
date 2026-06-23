@@ -404,8 +404,10 @@ function pct(a, b) { if(!b || isNaN(a) || isNaN(b)) return '—'; return (a/b*10
 
 function deltaHtml(curr, prev) {
   if(prev === null || prev === undefined) return '';
+  // Se período anterior tem dados muito baixos (< 5), o comparativo não é confiável
+  if(prev < 5 && curr > prev) return '<span class="delta delta-zero">—</span>';
   if(prev === 0 && curr === 0) return '<span class="delta delta-zero">0%</span>';
-  if(prev === 0) return '<span class="delta delta-up">+∞</span>';
+  if(prev === 0) return '<span class="delta delta-zero">—</span>';
   const d = ((curr - prev) / prev * 100).toFixed(0);
   const cls = d > 0 ? 'delta-up' : d < 0 ? 'delta-down' : 'delta-zero';
   const sign = d > 0 ? '+' : '';
