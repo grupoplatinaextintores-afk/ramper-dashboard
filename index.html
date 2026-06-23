@@ -138,6 +138,7 @@ code { background: var(--bg); border: 1px solid var(--border); border-radius: 4p
     </div>
   </div>
   <div class="header-right">
+    <a href="esgotados.html" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:white;border-radius:6px;padding:5px 12px;font-size:12px;cursor:pointer;text-decoration:none;display:flex;align-items:center;gap:6px;">🚫 Empresas Esgotadas</a>
     <span class="last-update" id="last-update">—</span>
     <button class="btn-refresh" onclick="loadData()">
       <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
@@ -347,12 +348,6 @@ function calcMetrics(rows, range) {
 
   // Filtra por período baseado em data_primeiro_contato
   // Leads sem data são tratados como pertencentes ao período mais recente
-  // DEBUG
-  const comData = rows.filter(r => r.data).length;
-  const semData = rows.filter(r => !r.data).length;
-  console.log(`Leads com data: ${comData}, sem data: ${semData}, total: ${rows.length}`);
-  if(rows.length > 0) console.log('Exemplo data_str:', rows[0].data_str, '| data:', rows[0].data);
-  // END DEBUG
   const isAll = range[0].getFullYear() === 2020;
   const inPeriod = rows.filter(r => {
     if(isAll) return true;
