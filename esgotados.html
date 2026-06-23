@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Empresas Esgotadas · Platina Extintores</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --red: #C0392B; --dark: #1A1A2E;
+  --green: #1D9E75; --green-bg: #E1F5EE;
+  --amber: #BA7517; --amber-bg: #FAEEDA;
+  --blue: #185FA5; --blue-bg: #E6F1FB;
+  --gray: #5F5E5A; --gray-bg: #F1EFE8;
+  --border: #E0DED7; --bg: #F7F6F2; --surface: #FFFFFF;
+  --text: #1A1A2E; --text-2: #5F5E5A; --text-3: #9C9A92;
+  --danger: #E24B4A; --danger-bg: #FCEBEB;
+  --radius: 10px; --radius-sm: 6px;
+}
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.5; min-height: 100vh; }
+
+/* HEADER */
+.header { background: var(--dark); padding: 0 2rem; height: 56px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+.header-brand { display: flex; align-items: center; gap: 10px; }
+.brand-icon { width: 28px; height: 28px; background: var(--red); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+.brand-icon svg { width: 16px; height: 16px; fill: white; }
+.brand-name { font-size: 14px; font-weight: 600; color: white; letter-spacing: .02em; }
+.brand-sub { font-size: 11px; color: rgba(255,255,255,.45); margin-left: 2px; }
+.header-right { display: flex; align-items: center; gap: 12px; }
+.btn-back { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15); color: white; border-radius: var(--radius-sm); padding: 5px 12px; font-size: 12px; cursor: pointer; text-decoration: none; display: flex; align-items: center; gap: 6px; transition: background .15s; }
+.btn-back:hover { background: rgba(255,255,255,.18); }
+.btn-refresh { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15); color: white; border-radius: var(--radius-sm); padding: 5px 12px; font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: background .15s; }
+.btn-refresh:hover { background: rgba(255,255,255,.18); }
+.btn-refresh svg { width: 13px; height: 13px; fill: none; stroke: white; stroke-width: 2; }
+
+/* LAYOUT */
+.main { max-width: 1140px; margin: 0 auto; padding: 1.5rem 1.5rem 3rem; }
+
+/* FILTROS */
+.filters-bar { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: .875rem 1rem; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.filter-group { display: flex; align-items: center; gap: 6px; }
+.filter-label { font-size: 11px; color: var(--text-3); font-weight: 500; text-transform: uppercase; letter-spacing: .05em; white-space: nowrap; }
+.filter-select { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 5px 9px; font-size: 12px; color: var(--text); cursor: pointer; }
+.filter-select:focus { outline: none; border-color: var(--red); }
+.filter-divider { width: 1px; height: 24px; background: var(--border); margin: 0 4px; }
+
+/* STATS */
+.stats-row { display: flex; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+.stat { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: .75rem 1rem; flex: 1; min-width: 140px; }
+.stat-label { font-size: 11px; color: var(--text-3); font-weight: 500; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 4px; }
+.stat-value { font-size: 26px; font-weight: 600; color: var(--text); line-height: 1; }
+.stat-value.red { color: var(--danger); }
+.stat-value.amber { color: var(--amber); }
+.stat-value.blue { color: var(--blue); }
+
+/* TABELA */
+.table-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.table-header { padding: .875rem 1.25rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+.table-title { font-size: 13px; font-weight: 600; color: var(--text); }
+.table-count { font-size: 11px; color: var(--text-3); background: var(--bg); border: 1px solid var(--border); border-radius: 20px; padding: 2px 10px; }
+.search-input { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 5px 10px; font-size: 12px; color: var(--text); width: 200px; }
+.search-input:focus { outline: none; border-color: var(--red); }
+table { width: 100%; border-collapse: collapse; }
+th { background: var(--bg); padding: .625rem 1rem; text-align: left; font-size: 11px; font-weight: 600; color: var(--text-3); text-transform: uppercase; letter-spacing: .05em; border-bottom: 1px solid var(--border); white-space: nowrap; }
+td { padding: .75rem 1rem; font-size: 13px; color: var(--text); border-bottom: 1px solid var(--border); vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--bg); }
+.empresa-nome { font-weight: 600; color: var(--text); }
+.contato-nome { font-size: 13px; color: var(--text); }
+.contato-email { font-size: 11px; color: var(--text-3); margin-top: 2px; }
+.pill { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 20px; white-space: nowrap; }
+.p-danger { background: var(--danger-bg); color: var(--danger); }
+.p-amber { background: var(--amber-bg); color: var(--amber); }
+.p-blue { background: var(--blue-bg); color: var(--blue); }
+.p-gray { background: var(--gray-bg); color: var(--gray); }
+.cadencia-tag { display: inline-flex; align-items: center; gap: 4px; }
+.tag { font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 4px; }
+.tag-a { background: var(--blue-bg); color: var(--blue); }
+.tag-b { background: var(--amber-bg); color: var(--amber); }
+.contexto-text { font-size: 12px; color: var(--text-2); max-width: 280px; line-height: 1.4; }
+.dias-badge { font-size: 12px; font-weight: 600; color: var(--danger); }
+
+/* ESTADO */
+.state-msg { text-align: center; padding: 3rem; color: var(--text-3); font-size: 13px; }
+.spinner { width: 24px; height: 24px; border: 2px solid var(--border); border-top-color: var(--red); border-radius: 50%; animation: spin .7s linear infinite; margin: 0 auto 12px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.empty-msg { text-align: center; padding: 3rem; color: var(--text-3); }
+.empty-icon { font-size: 32px; margin-bottom: 8px; }
+
+/* FOOTER */
+.footer { margin-top: 2rem; padding: 1rem 0; border-top: 1px solid var(--border); font-size: 11px; color: var(--text-3); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+code { background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px; font-family: monospace; }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-brand">
+    <div class="brand-icon"><svg viewBox="0 0 24 24"><path d="M12 2L4 7v10l8 5 8-5V7L12 2z"/></svg></div>
+    <div>
+      <span class="brand-name">Platina Extintores</span>
+      <span class="brand-sub">Empresas Esgotadas · Buscar novo contato</span>
+    </div>
+  </div>
+  <div class="header-right">
+    <a href="index.html" class="btn-back">← Dashboard</a>
+    <button class="btn-refresh" onclick="loadData()">
+      <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+      Atualizar
+    </button>
+  </div>
+</header>
+
+<main class="main">
+
+  <div class="filters-bar">
+    <div class="filter-group">
+      <span class="filter-label">Vendedor</span>
+      <select class="filter-select" id="filter-seller" onchange="renderTable()">
+        <option value="all">Todos</option>
+        <option value="Ronaldo">Ronaldo</option>
+        <option value="David">David</option>
+      </select>
+    </div>
+    <div class="filter-divider"></div>
+    <div class="filter-group">
+      <span class="filter-label">Cadência</span>
+      <select class="filter-select" id="filter-cadencia" onchange="renderTable()">
+        <option value="all">Todas</option>
+        <option value="A+B">A + B (8 tentativas)</option>
+        <option value="A">Somente A (4 tentativas)</option>
+      </select>
+    </div>
+    <div class="filter-divider"></div>
+    <input type="text" class="search-input" id="search" placeholder="Buscar empresa ou contato..." oninput="renderTable()">
+  </div>
+
+  <div class="stats-row" id="stats-row">
+    <div class="stat"><div class="stat-label">Total esgotados</div><div class="stat-value red" id="stat-total">—</div></div>
+    <div class="stat"><div class="stat-label">Ronaldo</div><div class="stat-value blue" id="stat-ronaldo">—</div></div>
+    <div class="stat"><div class="stat-label">David</div><div class="stat-value amber" id="stat-david">—</div></div>
+    <div class="stat"><div class="stat-label">Cadência A+B</div><div class="stat-value" id="stat-ab">—</div></div>
+    <div class="stat"><div class="stat-label">Tempo médio</div><div class="stat-value" id="stat-tempo">—</div></div>
+  </div>
+
+  <div class="table-card">
+    <div class="table-header">
+      <span class="table-title">Empresas sem resposta após todas as tentativas</span>
+      <span class="table-count" id="table-count">0 registros</span>
+    </div>
+    <div id="table-content">
+      <div class="state-msg"><div class="spinner"></div>Carregando dados...</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>Filtrado por <code>Status_interno = esgotado</code> · aba <code>Pendentes_IA</code></span>
+    <span id="last-update">—</span>
+  </div>
+
+</main>
+
+<script>
+const SHEET_ID   = '1iM7RpYL5HvdUHngRGGMqBG6159L1duOeellWPpn-gh8';
+const SHEET_NAME = 'Pendentes_IA';
+
+let allRows = [];
+
+function parseDate(str) {
+  if(!str) return null;
+  try {
+    const s = String(str).trim();
+    if(/^\d{4}-\d{2}-\d{2}/.test(s)) return new Date(s.substring(0,10)+'T00:00:00');
+    if(/^\d{1,2}\/\d{1,2}\/\d{4}/.test(s)) {
+      const [dd,mm,yy] = s.split('/');
+      return new Date(`${yy}-${mm.padStart(2,'0')}-${dd.padStart(2,'0')}T00:00:00`);
+    }
+  } catch(e) {}
+  return null;
+}
+
+function diasDesde(date) {
+  if(!date) return null;
+  return Math.round((new Date() - date) / (1000*60*60*24));
+}
+
+function cadencia(tentativas) {
+  const t = parseInt(tentativas) || 0;
+  if(t >= 8) return 'A+B';
+  if(t >= 4) return 'A';
+  return 'A';
+}
+
+async function loadData() {
+  document.getElementById('table-content').innerHTML =
+    '<div class="state-msg"><div class="spinner"></div>Carregando dados...</div>';
+
+  try {
+    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
+    const res = await fetch(url);
+    const text = await res.text();
+    const json = JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1]);
+    const rows = json.table.rows.slice(1);
+
+    allRows = rows.map(r => {
+      const g = i => r.c[i]?.v ?? '';
+      const gDate = i => r.c[i]?.f || r.c[i]?.v || '';
+      return {
+        vendedor:    g(1),
+        nome:        g(2),
+        empresa:     g(3),
+        email:       g(4),
+        status_int:  g(6),
+        contexto:    g(11),
+        tentativas:  parseInt(g(16)) || 0,
+        data_str:    gDate(9),
+        data:        parseDate(gDate(9)),
+      };
+    }).filter(r => r.vendedor && r.status_int === 'esgotado');
+
+    document.getElementById('last-update').textContent =
+      'Atualizado ' + new Date().toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'});
+
+    renderTable();
+  } catch(e) {
+    document.getElementById('table-content').innerHTML =
+      `<div class="state-msg">Erro ao carregar: ${e.message}</div>`;
+  }
+}
+
+function renderTable() {
+  const seller   = document.getElementById('filter-seller').value;
+  const cadFilt  = document.getElementById('filter-cadencia').value;
+  const search   = document.getElementById('search').value.toLowerCase();
+
+  let filtered = allRows.filter(r => {
+    if(seller !== 'all' && r.vendedor !== seller) return false;
+    if(cadFilt !== 'all' && cadencia(r.tentativas) !== cadFilt) return false;
+    if(search && !r.empresa.toLowerCase().includes(search) && !r.nome.toLowerCase().includes(search) && !r.email.toLowerCase().includes(search)) return false;
+    return true;
+  });
+
+  // Stats
+  document.getElementById('stat-total').textContent    = allRows.length;
+  document.getElementById('stat-ronaldo').textContent  = allRows.filter(r => r.vendedor === 'Ronaldo').length;
+  document.getElementById('stat-david').textContent    = allRows.filter(r => r.vendedor === 'David').length;
+  document.getElementById('stat-ab').textContent       = allRows.filter(r => cadencia(r.tentativas) === 'A+B').length;
+
+  const comData = allRows.filter(r => r.data);
+  const tempoMedio = comData.length
+    ? Math.round(comData.reduce((a,r) => a + (diasDesde(r.data)||0), 0) / comData.length)
+    : null;
+  document.getElementById('stat-tempo').textContent = tempoMedio !== null ? tempoMedio + 'd' : '—';
+
+  document.getElementById('table-count').textContent = `${filtered.length} registro${filtered.length !== 1 ? 's' : ''}`;
+
+  if(filtered.length === 0) {
+    document.getElementById('table-content').innerHTML =
+      `<div class="empty-msg"><div class="empty-icon">✅</div><div>Nenhuma empresa esgotada${search ? ' para essa busca' : ''}.</div></div>`;
+    return;
+  }
+
+  const rows = filtered.map(r => {
+    const cad   = cadencia(r.tentativas);
+    const dias  = diasDesde(r.data);
+    const av    = r.vendedor === 'Ronaldo' ? 'RO' : 'DA';
+    const avcls = r.vendedor === 'Ronaldo' ? 'p-blue' : 'p-amber';
+
+    return `<tr>
+      <td>
+        <div class="empresa-nome">${r.empresa || '—'}</div>
+      </td>
+      <td>
+        <div class="contato-nome">${r.nome || '—'}</div>
+        <div class="contato-email">${r.email || '—'}</div>
+      </td>
+      <td><span class="pill ${avcls}">${r.vendedor}</span></td>
+      <td>
+        <div class="cadencia-tag">
+          <span class="tag tag-a">A</span>
+          ${cad === 'A+B' ? '<span style="color:var(--text-3);font-size:10px">+</span><span class="tag tag-b">B</span>' : ''}
+        </div>
+      </td>
+      <td>${r.data_str || '—'}</td>
+      <td>${dias !== null ? `<span class="dias-badge">${dias}d</span>` : '—'}</td>
+      <td><div class="contexto-text">${r.contexto || '—'}</div></td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('table-content').innerHTML = `
+    <table>
+      <thead>
+        <tr>
+          <th>Empresa</th>
+          <th>Contato</th>
+          <th>Vendedor</th>
+          <th>Cadência</th>
+          <th>Primeiro contato</th>
+          <th>Dias em cadência</th>
+          <th>Contexto</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+}
+
+loadData();
+</script>
+</body>
+</html>
