@@ -101,6 +101,7 @@ code { background: var(--bg); border: 1px solid var(--border); border-radius: 4p
   </div>
   <div class="header-right">
     <a href="index.html" class="btn-nav">← Dashboard</a>
+    <button class="btn-nav" onclick="exportEsgotados()" style="background:rgba(29,158,117,.25);border-color:rgba(29,158,117,.4)">📥 Exportar</button>
     <button class="btn-nav" onclick="loadData()">
       <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
       Atualizar
@@ -348,6 +349,46 @@ function renderAll() {
 }
 
 loadData();
+
+function exportEsgotados() {
+  const seller = document.getElementById('filter-seller').value;
+  const search = document.getElementById('search').value.toLowerCase();
+
+  let data = esgotados.filter(r => {
+    if(seller !== 'all' && r.vendedor !== seller) return false;
+    if(search && !r.empresa.toLowerCase().includes(search) && !r.nome.toLowerCase().includes(search)) return false;
+    return true;
+  }).map(r => ({
+    'Empresa':              r.empresa,
+    'Contato':              r.nome,
+    'E-mail':               r.email,
+    'Vendedor':             r.vendedor,
+    'Cadencia':             'A+B',
+    'Tentativas':           r.tentativas,
+    'Data_primeiro_contato': r.data_str,
+    'Contexto':             r.contexto,
+  }));
+
+  exportToExcel(data, 'esgotados_platina');
+}
+
+function exportToExcel(data, filename) {
+  if (!data || data.length === 0) { alert('Nenhum dado para exportar.'); return; }
+  const headers = Object.keys(data[0]);
+  const csvRows = [
+    headers.join(';'),
+    ...data.map(row => headers.map(h => {
+      const str = String(row[h] ?? '').replace(/"/g, '""');
+      return str.includes(';') || str.includes('\n') ? `"${str}"` : str;
+    }).join(';'))
+  ];
+  const csv  = '\uFEFF' + csvRows.join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.download = filename + '_' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click(); URL.revokeObjectURL(url);
+}
 </script>
 </body>
 </html>
