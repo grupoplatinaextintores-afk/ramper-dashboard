@@ -419,10 +419,10 @@ function metricCard(label, value, prev, sub, cls='', highlight='') {
   const borderCls = highlight ? `highlight${highlight === 'warn' ? '-warn' : highlight === 'blue' ? '-blue' : ''}` : '';
   const prevHtml = prev !== null && prev !== undefined
     ? `<div class="metric-compare"><span class="metric-prev">${prev} anterior</span>${deltaHtml(value, prev)}</div>`
-    : `<div class="metric-sub">${sub}</div>`;
+    : sub != null ? `<div class="metric-sub">${sub}</div>` : '';
   return `<div class="metric ${borderCls}">
     <div class="metric-label">${label}</div>
-    <div class="metric-value ${cls}">${value}</div>
+    <div class="metric-value ${cls}">${value ?? '—'}</div>
     ${prevHtml}
   </div>`;
 }
@@ -479,7 +479,7 @@ function renderApp(m, mPrev, periodLabel, compareLabel) {
       ${metricCard('E-mails disparados', m.disparos,    noCompare?null:p.disparos,    `média ${m.total?Math.round(m.disparos/m.total):0}/lead`, '', 'blue')}
       ${metricCard('Respondidos',        m.respondidos, noCompare?null:p.respondidos, pct(m.respondidos,m.disparos)+' dos disparos', 'green', '')}
       ${metricCard('Handoffs',           m.handoffs,    noCompare?null:p.handoffs,    pct(m.handoffs,m.respondidos)+' das respostas', 'green', '')}
-      ${metricCard('Taxa de resposta',   pct(m.respondidos,m.disparos), null, null, '', '')}
+      ${metricCard('Taxa de resposta',   m.disparos ? pct(m.respondidos,m.disparos) : '—', null, null, '', '')}
       ${metricCard('Desqualificados',    m.desqual,     noCompare?null:p.desqual,     pct(m.desqual,m.respondidos)+' das respostas', 'red', 'warn')}
     </div>
 
