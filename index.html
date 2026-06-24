@@ -364,6 +364,9 @@ function calcMetrics(rows, range) {
   const handoffs    = base.filter(r => ['qualificado','encerrado_handoff'].includes(r.status_int) || r.proxima === 'handoff').length;
   const desqual     = base.filter(r => r.status_int === 'desqualificado').length;
   const ativos      = base.filter(r => r.status === 'ativo').length;
+  const hibernando  = base.filter(r => r.status === 'hibernando').length;
+  const reabordagem = base.filter(r => r.etapa === 'reabordagem').length;
+  const esgotado    = base.filter(r => r.status_int === 'esgotado').length;
 
   // Tempo médio de conversão (dias entre primeiro contato e resposta, apenas respondidos)
   const respondidosComData = base.filter(r =>
@@ -398,7 +401,7 @@ function calcMetrics(rows, range) {
     handoffs:   base.filter(r => r.tentativas === n && (['qualificado','encerrado_handoff'].includes(r.status_int) || r.proxima === 'handoff')).length,
   }));
 
-  return { total, disparos, respondidos, handoffs, desqual, ativos, tempoConversao, porVendedor, porEtapa };
+  return { total, disparos, respondidos, handoffs, desqual, ativos, hibernando, reabordagem, esgotado, tempoConversao, porVendedor, porEtapa };
 }
 
 // ─── UTILITÁRIOS ──────────────────────────────────────────
@@ -459,11 +462,14 @@ function renderApp(m, mPrev, periodLabel, compareLabel) {
   };
 
   const funil = [
-    { label:'Leads abordados',     n:m.total,      color:'#378ADD' },
-    { label:'E-mails disparados',  n:m.disparos,   color:'#185FA5' },
-    { label:'Respondidos',         n:m.respondidos,color:'#1D9E75' },
-    { label:'Handoffs realizados', n:m.handoffs,   color:'#BA7517' },
-    { label:'Desqualificados',     n:m.desqual,    color:'#E24B4A' },
+    { label:'Leads abordados',        n:m.total,        color:'#378ADD' },
+    { label:'E-mails disparados',     n:m.disparos,     color:'#185FA5' },
+    { label:'Respondidos',            n:m.respondidos,  color:'#1D9E75' },
+    { label:'Handoffs realizados',    n:m.handoffs,     color:'#BA7517' },
+    { label:'Desqualificados',        n:m.desqual,      color:'#E24B4A' },
+    { label:'Hibernando (cad. B)',    n:m.hibernando,   color:'#7B68EE' },
+    { label:'Em reabordagem (cad. B)',n:m.reabordagem,  color:'#E67E22' },
+    { label:'Esgotados',              n:m.esgotado,     color:'#C0392B' },
   ];
 
   document.getElementById('app-content').innerHTML = `
@@ -481,7 +487,10 @@ function renderApp(m, mPrev, periodLabel, compareLabel) {
       ${metricCard('Respondidos',        m.respondidos, noCompare?null:p.respondidos, pct(m.respondidos,m.disparos)+' dos disparos', 'green', '')}
       ${metricCard('Handoffs',           m.handoffs,    noCompare?null:p.handoffs,    pct(m.handoffs,m.respondidos)+' das respostas', 'green', '')}
       ${metricCard('Taxa de resposta',   m.disparos ? pct(m.respondidos,m.disparos) : '—', null, null, '', '')}
-      ${metricCard('Desqualificados',    m.desqual,     noCompare?null:p.desqual,     pct(m.desqual,m.respondidos)+' das respostas', 'red', 'warn')}
+      \${metricCard('Desqualificados',    m.desqual,     noCompare?null:p.desqual,     pct(m.desqual,m.respondidos)+' das respostas', 'red', 'warn')}
+      ${metricCard('Hibernando',         m.hibernando,  noCompare?null:p.hibernando,  'aguardando cadência B', '', '')}
+      ${metricCard('Reabordagem B',      m.reabordagem, noCompare?null:p.reabordagem, pct(m.reabordagem,m.hibernando)+' dos hibernados', '', '')}
+      ${metricCard('Esgotados',          m.esgotado,    noCompare?null:p.esgotado,    pct(m.esgotado,m.total)+' do total', 'red', 'warn')}
     </div>
 
     <!-- FUNIL -->
