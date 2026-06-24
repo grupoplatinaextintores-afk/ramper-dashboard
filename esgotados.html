@@ -144,15 +144,15 @@ code { background: var(--bg); border: 1px solid var(--border); border-radius: 4p
     <div class="card">
       <div class="card-title"><span class="tag tag-a">A</span> Cadência A — 4 e-mails</div>
       <div class="kpi-row"><span class="kpi-key">Leads abordados</span><span class="kpi-val" id="ca-total">—</span></div>
-      <div class="kpi-row"><span class="kpi-key">Convertidos na cadência A</span><span class="kpi-val" id="ca-conv">—</span></div>
-      <div class="kpi-row"><span class="kpi-key">Taxa de conversão</span><span class="kpi-val" id="ca-taxa">—</span></div>
+      <div class="kpi-row"><span class="kpi-key">Handoffs na cadência A</span><span class="kpi-val" id="ca-conv">—</span></div>
+      <div class="kpi-row"><span class="kpi-key">Taxa de handoff</span><span class="kpi-val" id="ca-taxa">—</span></div>
       <div class="kpi-row"><span class="kpi-key">Foram para hibernação</span><span class="kpi-val" id="ca-hib">—</span></div>
     </div>
     <div class="card">
       <div class="card-title"><span class="tag tag-b">B</span> Cadência B — 4 e-mails após 30 dias</div>
       <div class="kpi-row"><span class="kpi-key">Leads reabordados</span><span class="kpi-val" id="cb-total">—</span></div>
-      <div class="kpi-row"><span class="kpi-key">Convertidos na cadência B</span><span class="kpi-val" id="cb-conv">—</span></div>
-      <div class="kpi-row"><span class="kpi-key">Taxa de conversão</span><span class="kpi-val" id="cb-taxa">—</span></div>
+      <div class="kpi-row"><span class="kpi-key">Handoffs na cadência B</span><span class="kpi-val" id="cb-conv">—</span></div>
+      <div class="kpi-row"><span class="kpi-key">Taxa de handoff</span><span class="kpi-val" id="cb-taxa">—</span></div>
       <div class="kpi-row"><span class="kpi-key">Esgotados (sem resposta)</span><span class="kpi-val" id="cb-esg">—</span></div>
     </div>
   </div>
@@ -270,15 +270,15 @@ function renderAll() {
   // ─── COMPARATIVO CADÊNCIA A vs B ─────────────────────
   // Cadência A: todos os leads que foram abordados (tentativas >= 1)
   const cadA_total = base.filter(r => r.tentativas >= 1).length;
-  // Convertidos na cadência A = responderam antes de ir para hibernação (tentativas <= 4 e não estão em hibernando/quarentena/esgotado)
-  const cadA_conv  = base.filter(r => r.tentativas <= 4 && !['hibernando','esgotado'].includes(r.status) && ['qualificado','encerrado_handoff','desqualificado','em_andamento'].includes(r.status_int)).length;
+  // Handoffs na cadência A = qualificado ou encerrado_handoff com tentativas <= 4
+  const cadA_conv  = base.filter(r => r.tentativas <= 4 && ['qualificado','encerrado_handoff'].includes(r.status_int)).length;
   // Foram para hibernação = passaram para cadência B
   const cadA_hib   = base.filter(r => r.tentativas >= 5).length;
 
   // Cadência B: leads que chegaram à reabordagem (tentativas >= 5)
   const cadB_total = base.filter(r => r.tentativas >= 5).length;
-  // Convertidos na cadência B = responderam durante B (tentativas 5-8 e não esgotados)
-  const cadB_conv  = base.filter(r => r.tentativas >= 5 && r.status_int !== 'esgotado' && ['qualificado','encerrado_handoff','desqualificado','em_andamento'].includes(r.status_int)).length;
+  // Handoffs na cadência B = qualificado ou encerrado_handoff com tentativas >= 5
+  const cadB_conv  = base.filter(r => r.tentativas >= 5 && ['qualificado','encerrado_handoff'].includes(r.status_int)).length;
   // Esgotados = completaram B sem resposta
   const cadB_esg   = base.filter(r => r.status_int === 'esgotado').length;
 
