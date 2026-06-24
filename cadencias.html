@@ -316,6 +316,7 @@ function renderAll() {
   // ─── COMPARATIVO A vs B ───────────────────────────────
   const cadA = base.filter(r => r.cadencia === 'A');
   const cadB = base.filter(r => r.cadencia === 'B');
+  // Filtro de cadência aplicado ao funil e tabela (mas comparativo A vs B mostra sempre os dois)
 
   const caHandoffs = cadA.filter(isHandoff).length;
   const cbHandoffs = cadB.filter(isHandoff).length;
@@ -367,7 +368,13 @@ function renderAll() {
   let filtered = base.filter(r => {
     if(!isHandoff(r)) return false;
     if(cadFil !== 'all' && r.cadencia !== cadFil) return false;
-    if(search && !r.empresa.toLowerCase().includes(search) && !r.nome.toLowerCase().includes(search)) return false;
+    if(search) {
+      const s = search.toLowerCase();
+      const match = (r.empresa || '').toLowerCase().includes(s)
+                 || (r.nome   || '').toLowerCase().includes(s)
+                 || (r.email  || '').toLowerCase().includes(s);
+      if(!match) return false;
+    }
     return true;
   });
 
@@ -424,11 +431,18 @@ loadData();
 function exportCadencias() {
   const seller = document.getElementById('filter-seller').value;
   const cadFil = document.getElementById('filter-cad').value;
+  const search = document.getElementById('search').value.toLowerCase();
 
   let data = allRows.filter(r => {
     if(!isHandoff(r)) return false;
     if(seller !== 'all' && r.vendedor !== seller) return false;
     if(cadFil !== 'all' && r.cadencia !== cadFil) return false;
+    if(search) {
+      const match = (r.empresa||'').toLowerCase().includes(search)
+                 || (r.nome   ||'').toLowerCase().includes(search)
+                 || (r.email  ||'').toLowerCase().includes(search);
+      if(!match) return false;
+    }
     return true;
   }).map(r => ({
     'Empresa':              r.empresa,
