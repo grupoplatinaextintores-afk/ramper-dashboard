@@ -663,40 +663,41 @@ loadData();
 
 function exportDashboard() {
   const period  = document.getElementById('filter-period').value;
+  const compare = document.getElementById('filter-compare').value;
   const seller  = document.getElementById('filter-seller').value;
-  
-  // Busca todos os rows visíveis na planilha
-  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
-  fetch(url).then(r => r.text()).then(text => {
-    const json = JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1]);
-    const rows = json.table.rows.slice(1);
-    
-    let data = rows.map(r => {
-      const g  = i => r.c[i]?.v ?? '';
-      const gD = i => r.c[i]?.f || r.c[i]?.v || '';
-      return {
-        'Lead_ID':           g(0),
-        'Vendedor':          g(1),
-        'Nome':              g(2),
-        'Empresa':           g(3),
-        'E-mail':            g(4),
-        'Telefone':          g(5),
-        'Status_interno':    g(6),
-        'Etapa_funil':       g(7),
-        'Ultima_acao':       g(8),
-        'Data_primeiro_contato': gD(9),
-        'Contexto_email':    g(11),
-        'Status':            g(12),
-        'Proxima_acao':      g(13),
-        'Data_proxima_acao': gD(14),
-        'Status_execucao':   g(15),
-        'Tentativas':        g(16),
-      };
-    }).filter(r => r['Vendedor']);
-    
-    if(seller !== 'all') data = data.filter(r => r['Vendedor'] === seller);
-    
-    exportToExcel(data, `dashboard_platina_${period}`);
+
+  // Reusar o fetchRows e aplicar os mesmos filtros do dashboard
+  fetchRows().then(allRows => {
+    const rows   = seller === 'all' ? allRows : allRows.filter(r => r.vendedor === seller);
+    const range  = getPeriodRange(period);
+    const [start, end] = range;
+    const isAll  = range[0].getFullYear() === 2020;
+
+    const filtered = rows.filter(r => {
+      if(isAll) return true;
+      if(!r.data) return false;
+      return r.data >= start && r.data <= end;
+    });
+
+    const data = filtered.map(r => ({
+      'Lead_ID':               r.lead_id,
+      'Vendedor':              r.vendedor,
+      'Nome':                  r.nome,
+      'Empresa':               r.empresa,
+      'E-mail':                r.email,
+      'Status_interno':        r.status_int,
+      'Etapa_funil':           r.etapa,
+      'Ultima_acao':           r.ultima_acao,
+      'Data_primeiro_contato': r.data_str,
+      'Status':                r.status,
+      'Proxima_acao':          r.proxima,
+      'Status_execucao':       r.status_exec,
+      'Tentativas':            r.tentativas,
+    }));
+
+    const periodoLabel = period === 'all' ? 'todo_periodo' : period;
+    const vendedorLabel = seller === 'all' ? 'todos' : seller;
+    exportToExcel(data, `dashboard_platina_${periodoLabel}_${vendedorLabel}`);
   });
 }
 
