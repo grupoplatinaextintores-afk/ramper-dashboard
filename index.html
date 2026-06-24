@@ -487,7 +487,7 @@ function renderApp(m, mPrev, periodLabel, compareLabel) {
       ${metricCard('Respondidos',        m.respondidos, noCompare?null:p.respondidos, pct(m.respondidos,m.disparos)+' dos disparos', 'green', '')}
       ${metricCard('Handoffs',           m.handoffs,    noCompare?null:p.handoffs,    pct(m.handoffs,m.respondidos)+' das respostas', 'green', '')}
       ${metricCard('Taxa de resposta',   m.disparos ? pct(m.respondidos,m.disparos) : '—', null, null, '', '')}
-      \${metricCard('Desqualificados',    m.desqual,     noCompare?null:p.desqual,     pct(m.desqual,m.respondidos)+' das respostas', 'red', 'warn')}
+      ${metricCard('Desqualificados',    m.desqual,     noCompare?null:p.desqual,     pct(m.desqual,m.respondidos)+' das respostas', 'red', 'warn')}
       ${metricCard('Hibernando',         m.hibernando,  noCompare?null:p.hibernando,  'aguardando cadência B', '', '')}
       ${metricCard('Reabordagem B',      m.reabordagem, noCompare?null:p.reabordagem, pct(m.reabordagem,m.hibernando)+' dos hibernados', '', '')}
       ${metricCard('Esgotados',          m.esgotado,    noCompare?null:p.esgotado,    pct(m.esgotado,m.total)+' do total', 'red', 'warn')}
