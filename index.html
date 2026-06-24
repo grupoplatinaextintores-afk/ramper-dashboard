@@ -140,6 +140,7 @@ code { background: var(--bg); border: 1px solid var(--border); border-radius: 4p
   <div class="header-right">
     <a href="cadencias.html" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:white;border-radius:6px;padding:5px 12px;font-size:12px;cursor:pointer;text-decoration:none;display:flex;align-items:center;gap:6px;">📊 Ver Cadências</a>
     <a href="esgotados.html" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:white;border-radius:6px;padding:5px 12px;font-size:12px;cursor:pointer;text-decoration:none;display:flex;align-items:center;gap:6px;">🚫 Esgotados</a>
+    <button class="btn-refresh" onclick="exportDashboard()" style="background:rgba(29,158,117,.25);border-color:rgba(29,158,117,.4)">📥 Exportar</button>
     <span class="last-update" id="last-update">—</span>
     <button class="btn-refresh" onclick="loadData()">
       <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
@@ -659,6 +660,63 @@ async function loadData() {
 }
 
 loadData();
+
+function exportDashboard() {
+  const period  = document.getElementById('filter-period').value;
+  const seller  = document.getElementById('filter-seller').value;
+  
+  // Busca todos os rows visíveis na planilha
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
+  fetch(url).then(r => r.text()).then(text => {
+    const json = JSON.parse(text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\)/)[1]);
+    const rows = json.table.rows.slice(1);
+    
+    let data = rows.map(r => {
+      const g  = i => r.c[i]?.v ?? '';
+      const gD = i => r.c[i]?.f || r.c[i]?.v || '';
+      return {
+        'Lead_ID':           g(0),
+        'Vendedor':          g(1),
+        'Nome':              g(2),
+        'Empresa':           g(3),
+        'E-mail':            g(4),
+        'Telefone':          g(5),
+        'Status_interno':    g(6),
+        'Etapa_funil':       g(7),
+        'Ultima_acao':       g(8),
+        'Data_primeiro_contato': gD(9),
+        'Contexto_email':    g(11),
+        'Status':            g(12),
+        'Proxima_acao':      g(13),
+        'Data_proxima_acao': gD(14),
+        'Status_execucao':   g(15),
+        'Tentativas':        g(16),
+      };
+    }).filter(r => r['Vendedor']);
+    
+    if(seller !== 'all') data = data.filter(r => r['Vendedor'] === seller);
+    
+    exportToExcel(data, `dashboard_platina_${period}`);
+  });
+}
+
+function exportToExcel(data, filename) {
+  if (!data || data.length === 0) { alert('Nenhum dado para exportar.'); return; }
+  const headers = Object.keys(data[0]);
+  const csvRows = [
+    headers.join(';'),
+    ...data.map(row => headers.map(h => {
+      const str = String(row[h] ?? '').replace(/"/g, '""');
+      return str.includes(';') || str.includes('\n') ? `"${str}"` : str;
+    }).join(';'))
+  ];
+  const csv  = '\uFEFF' + csvRows.join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.download = filename + '_' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click(); URL.revokeObjectURL(url);
+}
 </script>
 </body>
 </html>
